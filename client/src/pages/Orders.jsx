@@ -20,7 +20,7 @@ function Orders() {
         }
 
         const response = await axios.get(
-          "http://localhost:5000/api/orders/my-orders",
+          `${import.meta.env.VITE_API_URL}/api/orders/my-orders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -44,10 +44,6 @@ function Orders() {
     fetchOrders();
   }, [navigate]);
 
-  /* =========================
-     LOADING
-  ========================== */
-
   if (loading) {
     return (
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -68,10 +64,6 @@ function Orders() {
       </section>
     );
   }
-
-  /* =========================
-     ERROR
-  ========================== */
 
   if (error) {
     return (
@@ -98,15 +90,10 @@ function Orders() {
     );
   }
 
-  /* =========================
-     EMPTY
-  ========================== */
-
   if (orders.length === 0) {
     return (
       <section className="flex min-h-[75vh] items-center justify-center px-4">
         <div className="w-full max-w-md text-center">
-
           <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-indigo-50">
             <span className="text-5xl">📦</span>
           </div>
@@ -125,7 +112,6 @@ function Orders() {
           >
             Start Shopping →
           </Link>
-
         </div>
       </section>
     );
@@ -133,13 +119,9 @@ function Orders() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-
-      {/* =========================
-          HEADER
-      ========================== */}
+      {/* Header */}
 
       <div className="mb-8 sm:mb-10">
-
         <p className="text-sm font-bold uppercase tracking-wider text-indigo-600">
           Purchase History
         </p>
@@ -151,17 +133,12 @@ function Orders() {
         <p className="mt-2 text-sm text-gray-600 sm:text-base">
           View and track your previous orders.
         </p>
-
       </div>
 
-      {/* =========================
-          ORDERS
-      ========================== */}
+      {/* Orders */}
 
       <div className="space-y-5 sm:space-y-6">
-
         {orders.map((order) => {
-
           const statusStyles =
             order.orderStatus === "Delivered"
               ? "bg-green-100 text-green-700"
@@ -174,14 +151,11 @@ function Orders() {
               key={order._id}
               className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"
             >
-
               {/* Order Header */}
+
               <div className="border-b border-gray-200 p-4 sm:p-6">
-
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-
                   <div className="min-w-0">
-
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
                       Order ID
                     </p>
@@ -189,11 +163,9 @@ function Orders() {
                     <p className="mt-1 break-all text-sm font-bold text-gray-900 sm:text-base">
                       {order._id}
                     </p>
-
                   </div>
 
                   <div className="sm:text-right">
-
                     <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
                       Order Date
                     </p>
@@ -208,24 +180,19 @@ function Orders() {
                         }
                       )}
                     </p>
-
                   </div>
-
                 </div>
-
               </div>
 
               {/* Products */}
+
               <div className="p-4 sm:p-6">
-
                 <div className="space-y-4">
-
                   {order.items.map((item, index) => (
                     <div
                       key={`${order._id}-${index}`}
                       className="flex gap-3 sm:gap-4"
                     >
-
                       <img
                         src={item.image}
                         alt={item.name}
@@ -233,7 +200,6 @@ function Orders() {
                       />
 
                       <div className="min-w-0 flex-1">
-
                         <h2 className="line-clamp-2 text-sm font-bold text-gray-900 sm:text-base">
                           {item.name}
                         </h2>
@@ -245,35 +211,28 @@ function Orders() {
                         <p className="mt-1 text-xs text-gray-600 sm:text-sm">
                           ₹{item.price.toLocaleString("en-IN")} each
                         </p>
-
                       </div>
 
                       <div className="shrink-0 text-right">
-
                         <p className="text-sm font-bold text-gray-900 sm:text-base">
                           ₹
                           {(item.price * item.quantity).toLocaleString(
                             "en-IN"
                           )}
                         </p>
-
                       </div>
-
                     </div>
                   ))}
-
                 </div>
-
               </div>
 
               {/* Order Footer */}
+
               <div className="border-t border-gray-200 bg-gray-50 p-4 sm:p-6">
-
                 <div className="flex flex-col gap-5">
-
                   {/* Status */}
-                  <div className="flex flex-wrap items-center gap-3">
 
+                  <div className="flex flex-wrap items-center gap-3">
                     <span className="text-sm text-gray-500">
                       Status:
                     </span>
@@ -290,12 +249,11 @@ function Orders() {
                         {order.paymentMethod}
                       </span>
                     </span>
-
                   </div>
 
                   {/* Total + Button */}
-                  <div className="flex items-center justify-between gap-4">
 
+                  <div className="flex items-center justify-between gap-4">
                     <div>
                       <p className="text-xs text-gray-500">
                         Total Amount
@@ -312,19 +270,13 @@ function Orders() {
                     >
                       View Details
                     </Link>
-
                   </div>
-
                 </div>
-
               </div>
-
             </article>
           );
         })}
-
       </div>
-
     </section>
   );
 }
