@@ -70,7 +70,7 @@ function Checkout() {
       }));
 
       const response = await axios.post(
-        "http://localhost:5000/api/orders",
+        `${import.meta.env.VITE_API_URL}/api/orders`,
         {
           items: orderItems,
           shippingAddress: formData,
@@ -108,7 +108,6 @@ function Checkout() {
     return (
       <section className="flex min-h-[75vh] items-center justify-center px-4">
         <div className="w-full max-w-md text-center">
-
           <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-indigo-50">
             <span className="text-5xl">🛒</span>
           </div>
@@ -127,7 +126,6 @@ function Checkout() {
           >
             Continue Shopping →
           </Link>
-
         </div>
       </section>
     );
@@ -135,13 +133,9 @@ function Checkout() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-
-      {/* =========================
-          HEADER
-      ========================== */}
+      {/* Header */}
 
       <div className="mb-8 sm:mb-10">
-
         <Link
           to="/cart"
           className="text-sm font-semibold text-indigo-600 transition hover:text-indigo-700"
@@ -162,12 +156,9 @@ function Checkout() {
             Complete your delivery and payment details.
           </p>
         </div>
-
       </div>
 
-      {/* =========================
-          ERROR
-      ========================== */}
+      {/* Error */}
 
       {error && (
         <div className="mb-6 flex gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-700 sm:px-5">
@@ -176,22 +167,17 @@ function Checkout() {
         </div>
       )}
 
-      {/* =========================
-          CHECKOUT GRID
-      ========================== */}
+      {/* Checkout Grid */}
 
       <div className="grid gap-8 lg:grid-cols-3">
-
-        {/* =========================
-            FORM
-        ========================== */}
+        {/* Form */}
 
         <form
           onSubmit={handlePlaceOrder}
           className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6 lg:col-span-2"
         >
-
           {/* Shipping Information */}
+
           <div>
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600">
@@ -210,8 +196,8 @@ function Checkout() {
             </div>
 
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
-
               {/* Full Name */}
+
               <div className="sm:col-span-2">
                 <label
                   htmlFor="fullName"
@@ -234,6 +220,7 @@ function Checkout() {
               </div>
 
               {/* Phone */}
+
               <div>
                 <label
                   htmlFor="phone"
@@ -257,6 +244,7 @@ function Checkout() {
               </div>
 
               {/* Pincode */}
+
               <div>
                 <label
                   htmlFor="pincode"
@@ -280,6 +268,7 @@ function Checkout() {
               </div>
 
               {/* Address */}
+
               <div className="sm:col-span-2">
                 <label
                   htmlFor="address"
@@ -302,6 +291,7 @@ function Checkout() {
               </div>
 
               {/* City */}
+
               <div>
                 <label
                   htmlFor="city"
@@ -324,6 +314,7 @@ function Checkout() {
               </div>
 
               {/* State */}
+
               <div>
                 <label
                   htmlFor="state"
@@ -344,18 +335,15 @@ function Checkout() {
                   className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 sm:text-base"
                 />
               </div>
-
             </div>
           </div>
 
-          {/* Divider */}
           <div className="my-8 border-t border-gray-200" />
 
           {/* Payment */}
+
           <div>
-
             <div className="flex items-center gap-3">
-
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-600">
                 2
               </div>
@@ -369,12 +357,11 @@ function Checkout() {
                   Choose how you'd like to pay.
                 </p>
               </div>
-
             </div>
 
             <div className="mt-6 space-y-3">
-
               {/* COD */}
+
               <label
                 className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition ${
                   paymentMethod === "COD"
@@ -387,9 +374,7 @@ function Checkout() {
                   name="paymentMethod"
                   value="COD"
                   checked={paymentMethod === "COD"}
-                  onChange={(e) =>
-                    setPaymentMethod(e.target.value)
-                  }
+                  onChange={(e) => setPaymentMethod(e.target.value)}
                   className="mt-1 h-4 w-4 shrink-0 accent-indigo-600"
                 />
 
@@ -403,12 +388,11 @@ function Checkout() {
                   </p>
                 </div>
 
-                <span className="ml-auto text-xl">
-                  💵
-                </span>
+                <span className="ml-auto text-xl">💵</span>
               </label>
 
               {/* Razorpay */}
+
               <label
                 className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition ${
                   paymentMethod === "RAZORPAY"
@@ -421,31 +405,25 @@ function Checkout() {
                   name="paymentMethod"
                   value="RAZORPAY"
                   checked={paymentMethod === "RAZORPAY"}
-                  onChange={(e) =>
-                    setPaymentMethod(e.target.value)
-                  }
+                  onChange={(e) => setPaymentMethod(e.target.value)}
                   className="mt-1 h-4 w-4 shrink-0 accent-indigo-600"
                 />
 
                 <div className="min-w-0">
-                  <p className="font-bold text-gray-900">
-                    Razorpay
-                  </p>
+                  <p className="font-bold text-gray-900">Razorpay</p>
 
                   <p className="mt-1 text-xs leading-5 text-gray-500 sm:text-sm">
                     Online payment via Razorpay.
                   </p>
                 </div>
 
-                <span className="ml-auto text-xl">
-                  💳
-                </span>
+                <span className="ml-auto text-xl">💳</span>
               </label>
-
             </div>
           </div>
 
           {/* Place Order */}
+
           <button
             type="submit"
             disabled={loading}
@@ -459,39 +437,27 @@ function Checkout() {
           <p className="mt-4 text-center text-xs leading-5 text-gray-500">
             🔒 Your order information is securely processed.
           </p>
-
         </form>
 
-        {/* =========================
-            ORDER SUMMARY
-        ========================== */}
+        {/* Order Summary */}
 
         <aside className="lg:col-span-1">
-
           <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6 lg:sticky lg:top-24">
-
             <div className="flex items-center justify-between">
-
               <h2 className="text-xl font-extrabold text-gray-900 sm:text-2xl">
                 Order Summary
               </h2>
 
               <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-600">
-                {totalItems}{" "}
-                {totalItems === 1 ? "item" : "items"}
+                {totalItems} {totalItems === 1 ? "item" : "items"}
               </span>
-
             </div>
 
             {/* Products */}
+
             <div className="mt-6 space-y-4">
-
               {cartItems.map((item) => (
-                <div
-                  key={item._id}
-                  className="flex gap-3"
-                >
-
+                <div key={item._id} className="flex gap-3">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -499,7 +465,6 @@ function Checkout() {
                   />
 
                   <div className="min-w-0 flex-1">
-
                     <p className="line-clamp-2 text-sm font-bold text-gray-900">
                       {item.name}
                     </p>
@@ -510,23 +475,18 @@ function Checkout() {
 
                     <p className="mt-1 text-sm font-semibold text-gray-900">
                       ₹
-                      {(item.price * item.quantity).toLocaleString(
-                        "en-IN"
-                      )}
+                      {(item.price * item.quantity).toLocaleString("en-IN")}
                     </p>
-
                   </div>
-
                 </div>
               ))}
-
             </div>
 
             {/* Totals */}
+
             <div className="my-6 border-t border-gray-200" />
 
             <div className="space-y-3">
-
               <div className="flex justify-between text-sm text-gray-600 sm:text-base">
                 <span>Subtotal</span>
 
@@ -538,32 +498,24 @@ function Checkout() {
               <div className="flex justify-between text-sm text-gray-600 sm:text-base">
                 <span>Shipping</span>
 
-                <span className="font-semibold text-green-600">
-                  Free
-                </span>
+                <span className="font-semibold text-green-600">Free</span>
               </div>
-
             </div>
 
             <div className="my-6 border-t border-gray-200" />
 
             <div className="flex items-center justify-between">
-
-              <span className="text-lg font-bold text-gray-900">
-                Total
-              </span>
+              <span className="text-lg font-bold text-gray-900">Total</span>
 
               <span className="text-2xl font-extrabold text-gray-900">
                 ₹{totalPrice.toLocaleString("en-IN")}
               </span>
-
             </div>
 
             {/* Secure Info */}
+
             <div className="mt-6 rounded-xl bg-gray-50 p-4">
-
               <div className="flex gap-3">
-
                 <span className="text-lg">🔐</span>
 
                 <div>
@@ -575,17 +527,11 @@ function Checkout() {
                     Your personal and order information is protected.
                   </p>
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </aside>
-
       </div>
-
     </section>
   );
 }
