@@ -9,6 +9,7 @@ function Register() {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -27,19 +28,43 @@ function Register() {
 
     setError("");
     setSuccess("");
+
+    // Password validation
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    // Confirm password validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formData
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
+        {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }
       );
 
-      setSuccess("Account created successfully. Redirecting to login...");
+      setSuccess("Account created successfully! Redirecting to login...");
+
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
 
       setTimeout(() => {
         navigate("/login");
-      }, 1200);
+      }, 1500);
     } catch (error) {
       console.error("REGISTER ERROR:", error);
 
@@ -59,7 +84,7 @@ function Register() {
         {/* Header */}
         <div className="text-center">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-100 text-3xl">
-            ✨
+            🛍️
           </div>
 
           <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
@@ -74,7 +99,7 @@ function Register() {
         {/* Register Card */}
         <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-7">
 
-          {/* Error */}
+          {/* Error Message */}
           {error && (
             <div className="mb-5 flex gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               <span>⚠️</span>
@@ -82,10 +107,10 @@ function Register() {
             </div>
           )}
 
-          {/* Success */}
+          {/* Success Message */}
           {success && (
             <div className="mb-5 flex gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-              <span>✓</span>
+              <span>✅</span>
               <p>{success}</p>
             </div>
           )}
@@ -159,8 +184,31 @@ function Register() {
               />
 
               <p className="mt-2 text-xs text-gray-500">
-                Password must contain at least 6 characters.
+                Password must be at least 6 characters.
               </p>
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <label
+                htmlFor="confirmPassword"
+                className="mb-2 block text-sm font-semibold text-gray-700"
+              >
+                Confirm Password
+              </label>
+
+              <input
+                id="confirmPassword"
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                minLength={6}
+                autoComplete="new-password"
+                placeholder="Confirm your password"
+                className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 sm:text-base"
+              />
             </div>
 
             {/* Submit */}
@@ -187,10 +235,10 @@ function Register() {
           </div>
         </div>
 
-        {/* Security */}
+        {/* Security Note */}
         <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-500">
           <span>🔒</span>
-          <span>Your account information is securely protected</span>
+          <span>Your account information is securely protected.</span>
         </div>
       </div>
     </main>
