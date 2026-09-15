@@ -15,7 +15,7 @@ function Products() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/products"
+          `${import.meta.env.VITE_API_URL}/api/products`
         );
 
         setProducts(response.data.products || []);
@@ -92,9 +92,7 @@ function Products() {
             Something went wrong
           </h1>
 
-          <p className="mt-2 text-red-600">
-            {error}
-          </p>
+          <p className="mt-2 text-red-600">{error}</p>
 
           <button
             onClick={() => window.location.reload()}
@@ -109,10 +107,10 @@ function Products() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-
       {/* =========================
           PAGE HEADER
       ========================== */}
+
       <div className="mb-8 sm:mb-10">
         <p className="text-sm font-bold uppercase tracking-wider text-indigo-600">
           Shop Collection
@@ -130,11 +128,11 @@ function Products() {
       {/* =========================
           SEARCH + FILTER
       ========================== */}
+
       <div className="mb-8 rounded-2xl border border-gray-200 bg-gray-50 p-4 sm:p-5">
-
         <div className="grid gap-4 md:grid-cols-3">
-
           {/* Search */}
+
           <div className="md:col-span-2">
             <label
               htmlFor="product-search"
@@ -160,6 +158,7 @@ function Products() {
           </div>
 
           {/* Category */}
+
           <div>
             <label
               htmlFor="category-filter"
@@ -181,12 +180,11 @@ function Products() {
               ))}
             </select>
           </div>
-
         </div>
 
         {/* Filter Summary */}
-        <div className="mt-4 flex flex-col gap-3 border-t border-gray-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
 
+        <div className="mt-4 flex flex-col gap-3 border-t border-gray-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-gray-600">
             Showing{" "}
             <span className="font-bold text-gray-900">
@@ -203,16 +201,15 @@ function Products() {
               Clear Filters
             </button>
           )}
-
         </div>
       </div>
 
       {/* =========================
           PRODUCTS
       ========================== */}
+
       {filteredProducts.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-300 px-5 py-16 text-center sm:px-10">
-
           <div className="text-5xl">🔎</div>
 
           <h2 className="mt-5 text-2xl font-bold text-gray-900">
@@ -230,19 +227,14 @@ function Products() {
           >
             Show All Products
           </button>
-
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
           {filteredProducts.map((product) => (
-            <ProductCard
-              key={product._id}
-              product={product}
-            />
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       )}
-
     </section>
   );
 }
