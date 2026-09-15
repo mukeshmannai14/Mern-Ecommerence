@@ -18,7 +18,7 @@ function ProductDetails() {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/products/${id}`
+          `${import.meta.env.VITE_API_URL}/api/products/${id}`
         );
 
         setProduct(response.data.product);
@@ -92,7 +92,6 @@ function ProductDetails() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-
       {/* Back Button */}
       <Link
         to="/products"
@@ -103,10 +102,7 @@ function ProductDetails() {
 
       {/* Product */}
       <div className="mt-8 grid gap-8 md:grid-cols-2 md:gap-10 lg:gap-16">
-
-        {/* =========================
-            PRODUCT IMAGE
-        ========================== */}
+        {/* PRODUCT IMAGE */}
         <div className="overflow-hidden rounded-2xl bg-gray-100 shadow-sm sm:rounded-3xl">
           <div className="aspect-square">
             <img
@@ -117,11 +113,8 @@ function ProductDetails() {
           </div>
         </div>
 
-        {/* =========================
-            PRODUCT INFORMATION
-        ========================== */}
+        {/* PRODUCT INFORMATION */}
         <div className="flex flex-col justify-center">
-
           {/* Category */}
           <p className="text-xs font-bold uppercase tracking-widest text-indigo-600 sm:text-sm">
             {product.category}
@@ -146,7 +139,6 @@ function ProductDetails() {
 
           {/* Stock */}
           <div className="mt-5">
-
             {product.stock > 0 ? (
               <div className="inline-flex flex-wrap items-center gap-2 rounded-full bg-green-50 px-4 py-2">
                 <span className="text-green-600">✓</span>
@@ -168,7 +160,6 @@ function ProductDetails() {
                 </span>
               </div>
             )}
-
           </div>
 
           {/* Add To Cart */}
@@ -193,7 +184,6 @@ function ProductDetails() {
 
           {/* Additional Information */}
           <div className="mt-8 grid grid-cols-1 divide-y rounded-2xl border border-gray-200 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-
             <div className="p-4 text-center">
               <div className="text-xl">🚚</div>
               <p className="mt-2 text-xs font-bold text-gray-900 sm:text-sm">
@@ -214,21 +204,17 @@ function ProductDetails() {
                 Easy Shopping
               </p>
             </div>
-
           </div>
-
         </div>
       </div>
 
       {/* Bottom Information */}
       <div className="mt-12 border-t border-gray-200 pt-8 sm:mt-16 sm:pt-10">
-
         <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
           Product Information
         </h2>
 
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-
           <div className="rounded-xl bg-gray-50 p-5">
             <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
               Category
@@ -260,10 +246,8 @@ function ProductDetails() {
               ₹{product.price.toLocaleString("en-IN")}
             </p>
           </div>
-
         </div>
       </div>
-
     </section>
   );
 }

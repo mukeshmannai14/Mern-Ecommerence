@@ -186,7 +186,7 @@ function Home() {
               <img
                 src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d"
                 alt="Online shopping"
-                className="h-[300px] w-full object-cover sm:h-[400px] md:h-[500px] lg:h-[550px]"
+                className="h-[300 px] w-full object-cover sm:h-[400 px] md:h-[500 px] lg:h-[550 px]"
               />
 
             </div>
