@@ -66,22 +66,22 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/products"
-        );
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/products`
+      );
 
-        setProducts(response.data.products || []);
-      } catch (error) {
-        console.error("FETCH PRODUCTS ERROR:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      setProducts(response.data.products || []);
+    } catch (error) {
+      console.error("FETCH PRODUCTS ERROR:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchProducts();
-  }, []);
+  fetchProducts();
+}, []);
 
   const featuredProducts = products.slice(0, 8);
 
