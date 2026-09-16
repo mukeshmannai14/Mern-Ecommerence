@@ -206,8 +206,115 @@ const getOrderById = async (req, res) => {
   }
 };
 
+// ==============================
+// Cancel Order
+// ==============================
+
+const cancelOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // ==============================
+    // Find Order
+    // ==============================
+
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found.",
+      });
+    }
+
+    // ==============================
+    // Check Order Ownership
+    // ==============================
+
+    if (order.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to cancel this order.",
+      });
+    }
+
+    // ==============================
+    // Check Current Status
+    // ==============================
+
+    if (order.orderStatus === "Cancelled") {
+      return res.status(400).json({
+        success: false,
+        message: "This order is already cancelled.",
+      });
+    }
+
+    if (
+      order.orderStatus === "Shipped" ||
+      order.orderStatus === "Delivered"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "This order cannot be cancelled after shipping.",
+      });
+    }
+
+    // ==============================
+    // Restore Product Stock
+    // ==============================
+
+    for (const item of order.items) {
+      await Product.findByIdAndUpdate(
+        item.product,
+        {
+          $inc: {
+            stock: item.quantity,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+    }
+
+    // ==============================
+    // Update Order Status
+    // ==============================
+
+    order.orderStatus = "Cancelled";
+
+    // If payment was pending, keep it pending.
+    // A real Razorpay refund flow can be added later
+    // when actual online payment is integrated.
+
+    await order.save();
+
+    // ==============================
+    // Response
+    // ==============================
+
+    res.status(200).json({
+      success: true,
+      message: "Order cancelled successfully.",
+      order,
+    });
+  } catch (error) {
+    console.error("Cancel Order Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to cancel order.",
+    });
+  }
+};
+
+// ==============================
+// Export Controllers
+// ==============================
+
 module.exports = {
   createOrder,
   getMyOrders,
   getOrderById,
+  cancelOrder,
 };

@@ -31,7 +31,7 @@ function Admin() {
       setLoading(true);
 
       const response = await axios.get(
-        "http://localhost:5000/api/products"
+        `${import.meta.env.VITE_API_URL}/api/products`
       );
 
       setProducts(response.data.products || []);
@@ -111,7 +111,7 @@ function Admin() {
 
       if (editingId) {
         await axios.put(
-          `http://localhost:5000/api/products/${editingId}`,
+          `${import.meta.env.VITE_API_URL}/api/products/${editingId}`,
           productData,
           {
             headers: {
@@ -123,7 +123,7 @@ function Admin() {
         setMessage("Product updated successfully.");
       } else {
         await axios.post(
-          "http://localhost:5000/api/products",
+          `${import.meta.env.VITE_API_URL}/api/products`,
           productData,
           {
             headers: {
@@ -198,7 +198,7 @@ function Admin() {
       }
 
       await axios.delete(
-        `http://localhost:5000/api/products/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/products/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -227,13 +227,11 @@ function Admin() {
     return (
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="animate-pulse">
-
           <div className="h-10 w-64 rounded-lg bg-gray-200" />
 
           <div className="mt-3 h-5 w-96 max-w-full rounded bg-gray-100" />
 
-          <div className="mt-10 h-[500 px] rounded-2xl bg-gray-100" />
-
+          <div className="mt-10 h-[500px] rounded-2xl bg-gray-100" />
         </div>
       </section>
     );
@@ -241,15 +239,10 @@ function Admin() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-
-      {/* =========================
-          HEADER
-      ========================== */}
+      {/* HEADER */}
 
       <div className="mb-8 sm:mb-10">
-
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-
           <div>
             <p className="text-sm font-bold uppercase tracking-wider text-indigo-600">
               Store Management
@@ -265,7 +258,6 @@ function Admin() {
           </div>
 
           <div className="w-fit rounded-xl bg-indigo-50 px-4 py-3">
-
             <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600">
               Products
             </p>
@@ -273,21 +265,15 @@ function Admin() {
             <p className="mt-1 text-xl font-extrabold text-indigo-700">
               {products.length}
             </p>
-
           </div>
-
         </div>
-
       </div>
 
-      {/* =========================
-          ALERTS
-      ========================== */}
+      {/* ALERTS */}
 
       {error && (
         <div className="mb-6 flex gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-700 sm:px-5">
           <span>⚠️</span>
-
           <p>{error}</p>
         </div>
       )}
@@ -295,19 +281,14 @@ function Admin() {
       {message && (
         <div className="mb-6 flex gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-4 text-sm text-green-700 sm:px-5">
           <span>✓</span>
-
           <p>{message}</p>
         </div>
       )}
 
-      {/* =========================
-          PRODUCT FORM
-      ========================== */}
+      {/* PRODUCT FORM */}
 
       <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
-
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-indigo-600">
               Product Management
@@ -327,17 +308,15 @@ function Admin() {
               Cancel Edit
             </button>
           )}
-
         </div>
 
         <form
           onSubmit={handleSubmit}
           className="mt-6 grid gap-5 sm:grid-cols-2"
         >
-
           {/* Name */}
-          <div className="sm:col-span-2">
 
+          <div className="sm:col-span-2">
             <label
               htmlFor="name"
               className="mb-2 block text-sm font-semibold text-gray-700"
@@ -355,12 +334,11 @@ function Admin() {
               placeholder="Enter product name"
               className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 sm:text-base"
             />
-
           </div>
 
           {/* Description */}
-          <div className="sm:col-span-2">
 
+          <div className="sm:col-span-2">
             <label
               htmlFor="description"
               className="mb-2 block text-sm font-semibold text-gray-700"
@@ -378,12 +356,11 @@ function Admin() {
               placeholder="Enter product description"
               className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 sm:text-base"
             />
-
           </div>
 
           {/* Price */}
-          <div>
 
+          <div>
             <label
               htmlFor="price"
               className="mb-2 block text-sm font-semibold text-gray-700"
@@ -404,12 +381,11 @@ function Admin() {
               placeholder="1499"
               className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 sm:text-base"
             />
-
           </div>
 
           {/* Category */}
-          <div>
 
+          <div>
             <label
               htmlFor="category"
               className="mb-2 block text-sm font-semibold text-gray-700"
@@ -427,12 +403,11 @@ function Admin() {
               placeholder="Electronics"
               className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 sm:text-base"
             />
-
           </div>
 
           {/* Image */}
-          <div className="sm:col-span-2">
 
+          <div className="sm:col-span-2">
             <label
               htmlFor="image"
               className="mb-2 block text-sm font-semibold text-gray-700"
@@ -450,12 +425,11 @@ function Admin() {
               placeholder="https://example.com/image.jpg"
               className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 sm:text-base"
             />
-
           </div>
 
           {/* Stock */}
-          <div>
 
+          <div>
             <label
               htmlFor="stock"
               className="mb-2 block text-sm font-semibold text-gray-700"
@@ -475,12 +449,11 @@ function Admin() {
               placeholder="50"
               className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 sm:text-base"
             />
-
           </div>
 
           {/* Submit */}
-          <div className="flex items-end">
 
+          <div className="flex items-end">
             <button
               type="submit"
               disabled={saving}
@@ -492,21 +465,14 @@ function Admin() {
                 ? "Update Product"
                 : "Add Product"}
             </button>
-
           </div>
-
         </form>
-
       </div>
 
-      {/* =========================
-          PRODUCTS
-      ========================== */}
+      {/* PRODUCTS */}
 
       <div className="mt-10">
-
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-indigo-600">
               Inventory
@@ -521,12 +487,10 @@ function Admin() {
             {products.length}{" "}
             {products.length === 1 ? "product" : "products"}
           </p>
-
         </div>
 
         {products.length === 0 ? (
           <div className="mt-6 rounded-2xl border border-dashed border-gray-300 bg-white px-5 py-16 text-center">
-
             <div className="text-5xl">📦</div>
 
             <h3 className="mt-5 text-xl font-bold text-gray-900">
@@ -536,20 +500,17 @@ function Admin() {
             <p className="mt-2 text-sm text-gray-600">
               Add your first product using the form above.
             </p>
-
           </div>
         ) : (
           <div className="mt-6 space-y-4">
-
             {products.map((product) => (
               <article
                 key={product._id}
                 className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5"
               >
-
                 <div className="flex flex-col gap-5 md:flex-row md:items-center">
-
                   {/* Image */}
+
                   <img
                     src={product.image}
                     alt={product.name}
@@ -558,8 +519,8 @@ function Admin() {
                   />
 
                   {/* Details */}
-                  <div className="min-w-0 flex-1">
 
+                  <div className="min-w-0 flex-1">
                     <p className="text-xs font-bold uppercase tracking-wide text-indigo-600">
                       {product.category}
                     </p>
@@ -573,7 +534,6 @@ function Admin() {
                     </p>
 
                     <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-
                       <p className="font-bold text-gray-900">
                         ₹{product.price.toLocaleString("en-IN")}
                       </p>
@@ -589,14 +549,12 @@ function Admin() {
                       >
                         Stock: {product.stock}
                       </p>
-
                     </div>
-
                   </div>
 
                   {/* Actions */}
-                  <div className="grid grid-cols-2 gap-3 md:flex md:shrink-0">
 
+                  <div className="grid grid-cols-2 gap-3 md:flex md:shrink-0">
                     <button
                       type="button"
                       onClick={() => handleEdit(product)}
@@ -612,19 +570,13 @@ function Admin() {
                     >
                       Delete
                     </button>
-
                   </div>
-
                 </div>
-
               </article>
             ))}
-
           </div>
         )}
-
       </div>
-
     </section>
   );
 }
