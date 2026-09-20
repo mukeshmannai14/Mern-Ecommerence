@@ -5,23 +5,25 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const connectDB = require("./config/db");
+
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
+
 const app = express();
 
-
 // ========================================
 // Middleware
 // ========================================
 
-// Middleware
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 // ========================================
@@ -31,7 +33,10 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 
 app.use("/api/products", productRoutes);
+
 app.use("/api/orders", orderRoutes);
+
+app.use("/api/payment", paymentRoutes);
 
 // ========================================
 // Home Route
@@ -44,7 +49,6 @@ app.get("/", (req, res) => {
   });
 });
 
-
 // ========================================
 // Start Server
 // ========================================
@@ -53,14 +57,11 @@ const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
   try {
-    // Wait for MongoDB
     await connectDB();
 
-    // Start Express only after DB connection
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
     });
-
   } catch (error) {
     console.error("❌ Failed to start server");
     process.exit(1);
